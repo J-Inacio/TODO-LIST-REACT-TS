@@ -7,6 +7,7 @@ export interface TaskInterface {
   taskName: string;
   createdAt: string;
   isChecked: boolean;
+  description?: string;
 }
 
 interface ToDoContextType {

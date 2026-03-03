@@ -7,9 +7,10 @@ import { useSetTimeout } from "../../hooks/useSetTimeout";
 
 interface ListItemProps {
   item: TaskInterface;
+  onOpenDetails: () => void;
 }
 
-export const ListItem = ({ item }: ListItemProps) => {
+export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
   const { updateTask, removeTask } = useTodo();
   const [inputField, setInputField] = useState(item.taskName);
   const [sucessColor, setSucessColor] = useState(false);
@@ -67,14 +68,14 @@ export const ListItem = ({ item }: ListItemProps) => {
           className={`${item.isChecked ? "text-gray-600 line-through" : "text-gray-900"} ${sucessColor ? "bg-green-300" : "focus:bg-amber-50"}  focus:outline-0`}
         />
         <div className="flex gap-1">
+          <Button onClick={onOpenDetails}>Detalhes</Button>
           <Button
             onClick={() => {
-              console.log("Detalhes");
+              console.log("botão excluir clicado");
             }}
           >
-            Detalhes
+            Excluir
           </Button>
-          <Button onClick={handleRemoveTask}>Excluir</Button>
         </div>
       </li>
     </>
