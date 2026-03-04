@@ -69,13 +69,7 @@ export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
         />
         <div className="flex gap-1">
           <Button onClick={onOpenDetails}>Detalhes</Button>
-          <Button
-            onClick={() => {
-              console.log("botão excluir clicado");
-            }}
-          >
-            Excluir
-          </Button>
+          <Button onClick={handleRemoveTask}>Excluir</Button>
         </div>
       </li>
     </>

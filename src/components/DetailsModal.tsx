@@ -28,13 +28,23 @@ export const DetailsModal = ({ isOpen, onClose, task }: DetailsModalProps) => {
             className="absolute right-0 top-0 w-lg h-full bg-amber-50 p-4 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-3xl mb-2 font-bold">{task.taskName}</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl mb-2 font-bold">{task.taskName}</h2>
+              <div
+                className={`${task.isChecked ? "bg-emerald-600" : "bg-blue-600"} py-1 px-2 w-fit h-fit rounded-md `}
+              >
+                {task.isChecked ? "Concluído" : "Em andamento"}
+              </div>
+            </div>
             <div className="flex flex-col gap-1">
               <h3 className="text-2xl">Descrição:</h3>
               <p>{task.description || "Sem descrição disponível."}</p>
               <p className="mt-4 text-sm text-gray-500">Tarefa Criada em: {task.createdAt}</p>
             </div>
-            <button onClick={onClose} className="mt-8 bg-indigo-600 text-white px-4 py-2 rounded">
+            <button
+              onClick={onClose}
+              className="mt-8 bg-indigo-600 text-white px-4 py-2 rounded cursor-pointer hover:bg-indigo-700"
+            >
               Fechar
             </button>
           </motion.div>
