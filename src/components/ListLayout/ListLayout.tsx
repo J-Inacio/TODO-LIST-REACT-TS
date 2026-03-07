@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type TaskInterface, useTodo } from "../../contexts/ToDoContext";
 import { AddNewTask } from "../AddNewTask";
-import { DetailsModal } from "../DetailsModal";
+import { DetailsModal } from "../DetailsModal/DetailsModal";
 import { ListItem } from "./ListItem";
 export const ListLayout = () => {
   const { tasks } = useTodo();

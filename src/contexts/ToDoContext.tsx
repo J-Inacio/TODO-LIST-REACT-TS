@@ -2,17 +2,25 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { generateId } from "../utils/generateId";
 
+export interface SubTaskInterface {
+  subTaskName: string;
+  subIsChecked: boolean;
+}
+
 export interface TaskInterface {
   taskID: number;
   taskName: string;
   createdAt: string;
   isChecked: boolean;
-  description?: string;
+  description: string;
+  subtasks: SubTaskInterface[];
 }
 
 interface ToDoContextType {
   tasks: TaskInterface[];
-  addTask: (task: Omit<TaskInterface, "taskID" | "createdAt" | "isChecked">) => void;
+  addTask: (
+    task: Omit<TaskInterface, "taskID" | "createdAt" | "isChecked" | "description" | "subtasks">,
+  ) => void;
   removeTask: (id: number) => void;
   updateTask: (id: number, updatedFields: Partial<TaskInterface>) => void;
   isLoading: boolean;
@@ -28,12 +36,19 @@ export const ToDoContextProvider = ({ children }: { children: React.ReactNode })
     setIsLoading(false);
   }, []);
 
-  const addTask = (taskData: Omit<TaskInterface, "taskID" | "createdAt" | "isChecked">) => {
+  const addTask = (
+    taskData: Omit<
+      TaskInterface,
+      "taskID" | "createdAt" | "isChecked" | "description" | "subtasks"
+    >,
+  ) => {
     const newTask: TaskInterface = {
       ...taskData,
       taskID: generateId(),
       createdAt: new Date().toISOString(),
       isChecked: false,
+      description: "",
+      subtasks: [],
     };
     setTasks((currentTasks) => [newTask, ...currentTasks]);
   };
