@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useSetTimeout } from "./useSetTimeout"; // Importamos o cronômetro
+import { useSetTimeout } from "./useSetTimeout";
 
 export const useError = () => {
   const [isError, setIsError] = useState({ errorStatus: false, errorMessage: "" });

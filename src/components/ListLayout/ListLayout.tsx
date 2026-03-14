@@ -3,6 +3,7 @@ import { type TaskInterface, useTodo } from "../../contexts/ToDoContext";
 import { AddNewTask } from "../AddNewTask";
 import { DetailsModal } from "../DetailsModal/DetailsModal";
 import { ListItem } from "./ListItem";
+import { AnimatePresence } from "motion/react";
 export const ListLayout = () => {
   const { tasks } = useTodo();
   const [selectedTask, setSelectedTask] = useState<TaskInterface | null>(null);
@@ -18,7 +19,9 @@ export const ListLayout = () => {
             );
           })}
         </ul>
-        <DetailsModal isOpen={!!selectedTask} onClose={handleCloseModal} task={selectedTask} />
+        <AnimatePresence>
+          {selectedTask && <DetailsModal onClose={handleCloseModal} id={selectedTask.taskID} />}
+        </AnimatePresence>
       </div>
     </>
   );

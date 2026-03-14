@@ -3,6 +3,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { generateId } from "../utils/generateId";
 
 export interface SubTaskInterface {
+  subTaskID: string;
   subTaskName: string;
   subIsChecked: boolean;
 }
@@ -23,6 +24,9 @@ interface ToDoContextType {
   ) => void;
   removeTask: (id: number) => void;
   updateTask: (id: number, updatedFields: Partial<TaskInterface>) => void;
+  addSubTask: (id: number, subTaskName: string) => void;
+  removeSubTask: (id: number, subTaskID: string) => void;
+  updateSubTask: (id: number, subTaskID: string, updatedFields: Partial<SubTaskInterface>) => void;
   isLoading: boolean;
 }
 
@@ -53,11 +57,67 @@ export const ToDoContextProvider = ({ children }: { children: React.ReactNode })
     setTasks((currentTasks) => [newTask, ...currentTasks]);
   };
 
+  const addSubTask = (id: number, subTaskName: string) => {
+    const newSubTask: SubTaskInterface = {
+      subTaskID: `${id}S${generateId()}`,
+      subTaskName: subTaskName,
+      subIsChecked: false,
+    };
+
+    setTasks((currentTasks) =>
+      currentTasks.map((task) => {
+        if (task.taskID === id) {
+          return {
+            ...task,
+            subtasks: [newSubTask, ...task.subtasks],
+          };
+        }
+
+        return task;
+      }),
+    );
+  };
+
+  const removeSubTask = (id: number, subTaskID: string) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) => {
+        if (task.taskID === id) {
+          return {
+            ...task,
+            subtasks: task.subtasks.filter((subtask) => subtask.subTaskID !== subTaskID),
+          };
+        }
+
+        return task;
+      }),
+    );
+  };
+
+  const updateSubTask = (
+    taskID: number,
+    subTaskID: string,
+    updatedFields: Partial<SubTaskInterface>,
+  ) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) => {
+        if (task.taskID === taskID) {
+          return {
+            ...task,
+            subtasks: task.subtasks.map((subtask) =>
+              subtask.subTaskID === subTaskID ? { ...subtask, ...updatedFields } : subtask,
+            ),
+          };
+        }
+        return task;
+      }),
+    );
+  };
+
   const removeTask = (id: number) => {
     setTasks((currentTasks) => currentTasks.filter((task) => task.taskID !== id));
   };
 
-  const updateTask = (id: number, updatedFields: Partial<TaskInterface>) => {
+  const updateTask = (id: number | undefined, updatedFields: Partial<TaskInterface>) => {
     setTasks((currentTasks) =>
       currentTasks.map((task) => (task.taskID === id ? { ...task, ...updatedFields } : task)),
     );
@@ -68,6 +128,9 @@ export const ToDoContextProvider = ({ children }: { children: React.ReactNode })
     addTask,
     removeTask,
     updateTask,
+    addSubTask,
+    removeSubTask,
+    updateSubTask,
     isLoading,
   };
 
