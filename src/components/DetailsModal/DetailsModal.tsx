@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTodo } from "../../contexts/ToDoContext";
 import { actionOnKeyDown } from "../../utils/actionOnKeyDown";
 import { Button } from "../Button";
@@ -6,6 +6,7 @@ import { useError } from "../../hooks/useError";
 import { formatDate } from "../../utils/formatDate";
 import { motion } from "framer-motion";
 import { SubtaskItem } from "./SubtaskItem";
+import { Description } from "./Description";
 
 interface DetailsModalProps {
   onClose: () => void;
@@ -13,26 +14,10 @@ interface DetailsModalProps {
 }
 
 export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
-  const { updateTask, addSubTask, tasks } = useTodo();
-
+  const { addSubTask, tasks } = useTodo();
   const liveTask = tasks.find((t) => t.taskID === id);
-
-  const [inputDescription, setInputDescription] = useState("");
   const [subTaskName, setSubTaskName] = useState("");
   const { isError, showError } = useError();
-
-  useEffect(() => {
-    setInputDescription(liveTask?.description ?? "");
-  }, [liveTask]);
-
-  const handleOnEnter = (ev: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    actionOnKeyDown(ev, "Enter", handleUpdateDescription);
-  };
-
-  const handleUpdateDescription = () => {
-    if (!liveTask) return;
-    updateTask(liveTask.taskID, { description: inputDescription });
-  };
 
   const onChangeSubTaskInput = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setSubTaskName(ev.target.value);
@@ -77,22 +62,7 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="description" className="text-2xl">
-            Descrição:
-          </label>
-          <div className="w-full flex mb-2">
-            <textarea
-              id="description"
-              className="bg-stone-700 text-amber-50 w-full resize-none p-2"
-              onChange={(ev) => setInputDescription(ev.target.value)}
-              value={inputDescription}
-              onKeyDown={handleOnEnter}
-              onBlur={handleUpdateDescription}
-              maxLength={300}
-              rows={5}
-              spellCheck={true}
-            />
-          </div>
+          <Description task={liveTask} />
           <h3 className="text-2xl">SubTarefas:</h3>
           <div className="flex w-full gap-2">
             <Button onClick={handleAddSubTask}>+</Button>
