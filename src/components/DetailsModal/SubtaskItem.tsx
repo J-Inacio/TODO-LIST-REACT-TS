@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { type SubTaskInterface, useTodo } from "../../contexts/ToDoContext";
-import { Button } from "../Button";
+import { Button } from "../ui/Button";
 import { actionOnKeyDown } from "../../utils/actionOnKeyDown";
+import { Checkbox } from "../ui/Checkbox";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
 interface SubtaskItemProps {
   subtask: SubTaskInterface;
@@ -28,21 +30,24 @@ export const SubtaskItem = ({ subtask, taskID }: SubtaskItemProps) => {
   };
 
   return (
-    <div className="flex gap-2 mb-2 w-full">
-      <input
-        type="checkbox"
-        checked={subtask.subIsChecked}
-        onChange={handleCheckBox}
-        className="w-6 cursor-pointer"
-      />
-      <input
-        value={editName}
-        onChange={(ev) => setEditName(ev.target.value)}
-        onBlur={handleSaveName}
-        onKeyDown={(ev) => actionOnKeyDown(ev, "Enter", handleSaveName)}
-        className="bg-stone-700 text-amber-50 w-full indent-2"
-      />
-      <Button onClick={() => removeSubTask(taskID, subtask.subTaskID)}>Excluir</Button>
-    </div>
+    <li className="flex justify-between p-2 bg-stone-700 rounded-sm ">
+      <div className="flex gap-1 items-center">
+        <Checkbox isChecked={subtask.subIsChecked} onChange={handleCheckBox} />
+        <input
+          type="text"
+          onChange={(ev) => setEditName(ev.target.value)}
+          value={editName}
+          onKeyDown={(ev) => actionOnKeyDown(ev, "Enter", handleSaveName)}
+          onBlur={handleSaveName}
+          className={`${subtask.subIsChecked ? "text-gray-600 line-through" : "text-amber-50"} focus:bg-stone-800 indent-1 rounded-sm focus:outline-0`}
+        />
+      </div>
+
+      <div className="flex gap-1">
+        <Button onClick={() => removeSubTask(taskID, subtask.subTaskID)}>
+          <TrashIcon className="w-5" />
+        </Button>
+      </div>
+    </li>
   );
 };

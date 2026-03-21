@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTodo } from "../../contexts/ToDoContext";
 import { actionOnKeyDown } from "../../utils/actionOnKeyDown";
-import { Button } from "../Button";
+import { Button } from "../ui/Button";
 import { useError } from "../../hooks/useError";
 import { formatDate } from "../../utils/formatDate";
 import { motion } from "framer-motion";
@@ -76,7 +76,7 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
             />
           </div>
           {isError.errorStatus && <p className="text-red-500">{isError.errorMessage}</p>}
-          <div>
+          <div className="flex flex-col gap-1">
             {liveTask?.subtasks?.map((subtask) => {
               return (
                 <SubtaskItem subtask={subtask} taskID={liveTask.taskID} key={subtask.subTaskID} />

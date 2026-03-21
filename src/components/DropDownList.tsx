@@ -9,9 +9,9 @@ interface DropDownListProps {
 }
 
 const listColor: Record<DropDownListProps["listName"], string> = {
-  "Todas tarefas": "bg-indigo-600",
-  "Em andamento": "bg-blue-600",
-  Concluídas: "bg-emerald-600",
+  "Todas tarefas": "bg-indigo-600 hover:bg-indigo-700",
+  "Em andamento": "bg-blue-600 hover:bg-blue-700",
+  Concluídas: "bg-emerald-600 hover:bg-emerald-700",
 };
 
 export const DropDownList = ({ children, listName }: DropDownListProps) => {

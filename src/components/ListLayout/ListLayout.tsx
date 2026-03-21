@@ -3,7 +3,7 @@ import { type TaskInterface, useTodo } from "../../contexts/ToDoContext";
 import { AddNewTask } from "../AddNewTask";
 import { DetailsModal } from "../DetailsModal/DetailsModal";
 import { ListItem } from "./ListItem";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { DropDownList } from "../DropDownList";
 export const ListLayout = () => {
   const { tasks } = useTodo();
@@ -25,14 +25,33 @@ export const ListLayout = () => {
         <div className="flex flex-col gap-2">
           {dropdownData.map((list) => (
             <DropDownList listName={list.title} key={list.title}>
-              <div className="flex flex-col gap-1">
-                {list.listData.map((item) => (
-                  <ListItem
-                    key={item.taskID}
-                    item={item}
-                    onOpenDetails={() => setSelectedTask(item)}
-                  />
-                ))}
+              <div className="flex flex-col">
+                <AnimatePresence>
+                  {list.listData.map((item) => (
+                    <motion.div
+                      key={item.taskID}
+                      initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                      animate={{ opacity: 1, height: "auto", marginBottom: 4 }}
+                      exit={{
+                        opacity: 0,
+                        height: 0,
+                        marginBottom: 0,
+                        scale: 0.9,
+                        transition: {
+                          opacity: { duration: 0.2 },
+                          scale: { duration: 0.2 },
+                          height: { delay: 0.2, duration: 0.2 },
+                          marginBottom: { delay: 0.2, duration: 0.2 },
+                        },
+                      }}
+                      transition={{ duration: 0.25 }}
+                      layout
+                      className="overflow-hidden"
+                    >
+                      <ListItem item={item} onOpenDetails={() => setSelectedTask(item)} />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
             </DropDownList>
           ))}

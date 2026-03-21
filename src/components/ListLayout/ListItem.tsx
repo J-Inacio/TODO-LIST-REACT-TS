@@ -1,9 +1,10 @@
-import { Button } from "../Button";
+import { Button } from "../ui/Button";
 import { useTodo, type TaskInterface } from "../../contexts/ToDoContext";
 import { actionOnKeyDown } from "../../utils/actionOnKeyDown";
 import React, { useState } from "react";
 import { useError } from "../../hooks/useError";
 import { useSetTimeout } from "../../hooks/useSetTimeout";
+import { Checkbox } from "../ui/Checkbox";
 
 interface ListItemProps {
   item: TaskInterface;
@@ -53,13 +54,9 @@ export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
     <>
       {isError.errorStatus && <p className="text-red-500">{isError.errorMessage}</p>}
       <li className="flex justify-between p-2 bg-gray-700 rounded-sm">
-        <div className="flex gap-1">
-          <input
-            type="checkbox"
-            checked={item.isChecked}
-            onChange={handleCheckBox}
-            className="w-6 cursor-pointer"
-          />
+        <div className="flex gap-1 items-center">
+          <Checkbox isChecked={item.isChecked} onChange={handleCheckBox} />
+
           <input
             type="text"
             onChange={handleChangeName}
