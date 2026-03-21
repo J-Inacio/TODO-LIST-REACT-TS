@@ -52,21 +52,24 @@ export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
   return (
     <>
       {isError.errorStatus && <p className="text-red-500">{isError.errorMessage}</p>}
-      <li className="flex border-t justify-between py-1">
-        <input
-          type="checkbox"
-          checked={item.isChecked}
-          onChange={handleCheckBox}
-          className="w-6 cursor-pointer"
-        />
-        <input
-          type="text"
-          onChange={handleChangeName}
-          value={inputField}
-          onKeyDown={handleSaveChangeName}
-          onBlur={saveTask}
-          className={`${item.isChecked ? "text-gray-600 line-through" : "text-gray-900"} ${sucessColor ? "bg-green-300" : "focus:bg-amber-50"}  focus:outline-0`}
-        />
+      <li className="flex justify-between p-2 bg-gray-700 rounded-sm">
+        <div className="flex gap-1">
+          <input
+            type="checkbox"
+            checked={item.isChecked}
+            onChange={handleCheckBox}
+            className="w-6 cursor-pointer"
+          />
+          <input
+            type="text"
+            onChange={handleChangeName}
+            value={inputField}
+            onKeyDown={handleSaveChangeName}
+            onBlur={saveTask}
+            className={`${item.isChecked ? "text-gray-600 line-through" : "text-amber-50"} ${sucessColor ? "bg-green-300" : "focus:bg-gray-800"} indent-1 rounded-sm focus:outline-0`}
+          />
+        </div>
+
         <div className="flex gap-1">
           <Button onClick={onOpenDetails}>Detalhes</Button>
           <Button onClick={handleRemoveTask}>Excluir</Button>
