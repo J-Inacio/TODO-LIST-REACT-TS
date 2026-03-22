@@ -35,7 +35,7 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-        className="absolute right-0 top-0 w-full md:w-lg h-full bg-amber-50 p-4 shadow-2xl"
+        className="absolute right-0 top-0 w-full md:w-lg h-full bg-gray-500 p-4 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center">

@@ -4,7 +4,7 @@ import { useSetTimeout } from "./useSetTimeout";
 export const useError = () => {
   const [isError, setIsError] = useState({ errorStatus: false, errorMessage: "" });
 
-  const { startTimer } = useSetTimeout(3, () => {
+  const { startTimer } = useSetTimeout(4, () => {
     setIsError({ errorStatus: false, errorMessage: "" });
   });
 
