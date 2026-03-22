@@ -20,10 +20,11 @@ export const ListLayout = () => {
 
   return (
     <>
-      <div className="w-xl h-auto bg-gray-500 p-4 rounded-2xl">
+      <div className="h-auto w-xl rounded-2xl bg-gray-500 p-4">
         <AddNewTask
           onAdd={(name) => addTask({ taskName: name })}
           placeholder="Adicione uma nova tarefa principal"
+          htmlInputId="todoAddInput"
         />
         <div className="flex flex-col gap-2">
           {dropdownData.map((list) => (

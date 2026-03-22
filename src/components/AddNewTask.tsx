@@ -8,12 +8,14 @@ interface AddNewTaskProps {
   placeholder?: string;
   errorMessage?: string;
   className?: string;
+  htmlInputId: string;
 }
 
 export const AddNewTask = ({
   onAdd,
   placeholder = "Adicionar nova tarefa...",
   errorMessage = "Por favor, adicione um texto",
+  htmlInputId,
 }: AddNewTaskProps) => {
   const [inputName, setInputName] = useState("");
   const { isError, showError } = useError();
@@ -41,6 +43,7 @@ export const AddNewTask = ({
         </button>
 
         <input
+          id={htmlInputId}
           placeholder={placeholder}
           type="text"
           className="h-full w-full rounded-lg bg-white indent-10 focus:border-transparent focus:outline-0"

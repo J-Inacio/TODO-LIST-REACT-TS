@@ -23,10 +23,10 @@ export const Description = ({ task }: DescriptionProps) => {
       <label htmlFor="description" className="text-2xl">
         Descrição:
       </label>
-      <div className="w-full flex mb-2">
+      <div className="mb-2 flex w-full">
         <textarea
           id="description"
-          className="bg-stone-700 text-amber-50 w-full resize-none p-2"
+          className="w-full resize-none rounded-lg bg-stone-700 p-2 text-amber-50 outline-0 transition-all duration-200 focus-within:ring-2 focus-within:ring-indigo-600 hover:ring-2 hover:ring-indigo-400"
           onChange={(ev) => setInputDescription(ev.target.value)}
           value={inputDescription}
           onBlur={handleUpdateDescription}

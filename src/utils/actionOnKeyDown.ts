@@ -4,7 +4,6 @@ export const actionOnKeyDown = (
   action: () => void,
 ) => {
   if (ev.key === keyName) {
-    console.log(`Nome alterado`);
     action();
   }
 };

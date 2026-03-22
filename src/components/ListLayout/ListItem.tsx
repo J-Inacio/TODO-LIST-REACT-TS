@@ -1,7 +1,7 @@
 import { Button } from "../ui/Button";
 import { useTodo, type TaskInterface } from "../../contexts/ToDoContext";
 import { actionOnKeyDown } from "../../utils/actionOnKeyDown";
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { useError } from "../../hooks/useError";
 import { useSetTimeout } from "../../hooks/useSetTimeout";
 import { Checkbox } from "../ui/Checkbox";
@@ -16,6 +16,7 @@ export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
   const [inputField, setInputField] = useState(item.taskName);
   const [sucessColor, setSucessColor] = useState(false);
   const { isError, showError } = useError();
+  const htmlID = useId();
   const { startTimer } = useSetTimeout(1, () => {
     setSucessColor(false);
   });
@@ -53,17 +54,18 @@ export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
   return (
     <>
       {isError.errorStatus && <p className="text-red-500">{isError.errorMessage}</p>}
-      <li className="flex justify-between p-2 bg-gray-700 rounded-sm">
-        <div className="flex gap-1 items-center">
-          <Checkbox isChecked={item.isChecked} onChange={handleCheckBox} />
+      <li className="flex justify-between rounded-sm bg-gray-700 p-2">
+        <div className="flex items-center gap-1">
+          <Checkbox isChecked={item.isChecked} onChange={handleCheckBox} id={item.taskID} />
 
           <input
+            id={`task-input-${htmlID}`}
             type="text"
             onChange={handleChangeName}
             value={inputField}
             onKeyDown={handleSaveChangeName}
             onBlur={saveTask}
-            className={`${item.isChecked ? "text-gray-600 line-through" : "text-amber-50"} ${sucessColor ? "bg-green-300" : "focus:bg-gray-800"} indent-1 rounded-sm focus:outline-0`}
+            className={`${item.isChecked ? "text-gray-600 line-through" : "text-amber-50"} ${sucessColor ? "text-emerald-600" : ""} h-full rounded-sm indent-1 focus:outline-0`}
           />
         </div>
 

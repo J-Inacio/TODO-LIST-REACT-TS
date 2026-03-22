@@ -22,12 +22,12 @@ export const DropDownList = ({ children, listName }: DropDownListProps) => {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className={`flex cursor-pointer items-center ${listColor[listName]} gap-1 py-1 px-2 w-fit h-fit rounded-md text-amber-50`}
+          className={`flex cursor-pointer items-center ${listColor[listName]} h-fit w-fit gap-1 rounded-md px-2 py-1 text-amber-50`}
         >
           <motion.i
             animate={{ rotate: isOpen ? 90 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="w-4 h-4 flex items-center justify-center"
+            className="flex h-4 w-4 items-center justify-center"
           >
             <ChevronRightIcon />
           </motion.i>
