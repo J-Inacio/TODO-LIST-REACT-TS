@@ -1,12 +1,9 @@
-import React, { useState } from "react";
 import { useTodo } from "../../contexts/ToDoContext";
-import { actionOnKeyDown } from "../../utils/actionOnKeyDown";
-import { Button } from "../ui/Button";
-import { useError } from "../../hooks/useError";
 import { formatDate } from "../../utils/formatDate";
 import { motion } from "framer-motion";
 import { SubtaskItem } from "./SubtaskItem";
 import { Description } from "./Description";
+import { AddNewTask } from "../AddNewTask";
 
 interface DetailsModalProps {
   onClose: () => void;
@@ -16,23 +13,11 @@ interface DetailsModalProps {
 export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
   const { addSubTask, tasks } = useTodo();
   const liveTask = tasks.find((t) => t.taskID === id);
-  const [subTaskName, setSubTaskName] = useState("");
-  const { isError, showError } = useError();
 
-  const onChangeSubTaskInput = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    setSubTaskName(ev.target.value);
-  };
-
-  const handleAddSubTask = () => {
+  const handleAddSubTask = (name: string) => {
     if (!liveTask) return;
 
-    if (subTaskName.trim() === "") {
-      showError("Você não pode adicionar uma subtarefa sem um nome");
-      return;
-    }
-
-    addSubTask(liveTask.taskID, subTaskName);
-    setSubTaskName("");
+    addSubTask(liveTask.taskID, name);
   };
 
   return (
@@ -64,18 +49,7 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
         <div className="flex flex-col gap-1">
           <Description task={liveTask} />
           <h3 className="text-2xl">SubTarefas:</h3>
-          <div className="flex w-full gap-2">
-            <Button onClick={handleAddSubTask}>+</Button>
-            <input
-              type="text"
-              className="bg-stone-700 text-amber-50 w-full indent-2"
-              placeholder="Adicione uma nova subtarefa"
-              onChange={onChangeSubTaskInput}
-              onKeyDown={(ev) => actionOnKeyDown(ev, "Enter", handleAddSubTask)}
-              value={subTaskName}
-            />
-          </div>
-          {isError.errorStatus && <p className="text-red-500">{isError.errorMessage}</p>}
+          <AddNewTask onAdd={handleAddSubTask} placeholder="Adicione uma nova subtarefa" />
           <div className="flex flex-col gap-1">
             {liveTask?.subtasks?.map((subtask) => {
               return (

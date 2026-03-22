@@ -6,7 +6,7 @@ import { ListItem } from "./ListItem";
 import { AnimatePresence, motion } from "motion/react";
 import { DropDownList } from "../DropDownList";
 export const ListLayout = () => {
-  const { tasks } = useTodo();
+  const { tasks, addTask } = useTodo();
   const [selectedTask, setSelectedTask] = useState<TaskInterface | null>(null);
   const handleCloseModal = () => setSelectedTask(null);
   const completedTasks = tasks.filter((t) => t.isChecked);
@@ -21,7 +21,10 @@ export const ListLayout = () => {
   return (
     <>
       <div className="w-xl h-auto bg-gray-500 p-4 rounded-2xl">
-        <AddNewTask />
+        <AddNewTask
+          onAdd={(name) => addTask({ taskName: name })}
+          placeholder="Adicione uma nova tarefa principal"
+        />
         <div className="flex flex-col gap-2">
           {dropdownData.map((list) => (
             <DropDownList listName={list.title} key={list.title}>
