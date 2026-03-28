@@ -25,6 +25,7 @@ export const ListLayout = () => {
           onAdd={(name) => addTask({ taskName: name })}
           placeholder="Adicione uma nova tarefa principal"
           htmlInputId="todoAddInput"
+          className="mb-2"
         />
         <div className="flex flex-col gap-2">
           {dropdownData.map((list) => (

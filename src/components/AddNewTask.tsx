@@ -16,6 +16,7 @@ export const AddNewTask = ({
   placeholder = "Adicionar nova tarefa...",
   errorMessage = "Por favor, adicione um texto",
   htmlInputId,
+  className,
 }: AddNewTaskProps) => {
   const [inputName, setInputName] = useState("");
   const { isError, showError } = useError();
@@ -34,7 +35,9 @@ export const AddNewTask = ({
   };
   return (
     <>
-      <label className="relative mb-2 flex h-10 w-full items-center justify-center rounded-lg transition-all duration-200 focus-within:ring-2 focus-within:ring-indigo-600 hover:ring-2 hover:ring-indigo-400">
+      <label
+        className={`relative flex h-10 w-full items-center justify-center rounded-lg transition-all duration-200 focus-within:ring-2 focus-within:ring-indigo-600 hover:ring-2 hover:ring-indigo-400 ${className}`}
+      >
         <button className="absolute left-0">
           <PlusCircleIcon
             className="h-7 w-10 cursor-pointer text-stone-700 hover:text-stone-800"

@@ -1,6 +1,6 @@
 import { useTodo } from "../../contexts/ToDoContext";
 import { formatDate } from "../../utils/formatDate";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { SubtaskItem } from "./SubtaskItem";
 import { Description } from "./Description";
 import { AddNewTask } from "../AddNewTask";
@@ -13,10 +13,13 @@ interface DetailsModalProps {
 export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
   const { addSubTask, tasks } = useTodo();
   const liveTask = tasks.find((t) => t.taskID === id);
+  const totalSubtasks = liveTask?.subtasks?.length ?? 0;
+  const hasSubtask = totalSubtasks > 0;
+  const subTasksCompleted = liveTask?.subtasks?.filter((t) => t.subIsChecked).length ?? 0;
+  const progressPercentage = hasSubtask ? Math.round((subTasksCompleted / totalSubtasks) * 100) : 0;
 
   const handleAddSubTask = (name: string) => {
     if (!liveTask) return;
-
     addSubTask(liveTask.taskID, name);
   };
 
@@ -48,20 +51,59 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
         </div>
         <div className="flex flex-col gap-1">
           <Description task={liveTask} />
-          <h3 className="text-2xl">SubTarefas:</h3>
-          <AddNewTask
-            onAdd={handleAddSubTask}
-            placeholder="Adicione uma nova subtarefa"
-            htmlInputId="subtaskAddInput"
-          />
-          <div className="flex flex-col gap-1">
-            {liveTask?.subtasks?.map((subtask) => {
-              return (
-                <SubtaskItem subtask={subtask} taskID={liveTask.taskID} key={subtask.subTaskID} />
-              );
-            })}
+          <div className="flex flex-col gap-2">
+            <h3 className="text-2xl">SubTarefas:</h3>
+            <AddNewTask
+              onAdd={handleAddSubTask}
+              placeholder="Adicione uma nova subtarefa"
+              htmlInputId="subtaskAddInput"
+            />
+            {hasSubtask && (
+              <div className="h-3 overflow-hidden rounded-full bg-white">
+                <div
+                  className={`h-full transition-all duration-300 ease-out ${progressPercentage === 100 ? "bg-emerald-600" : "bg-indigo-600"} `}
+                  style={{ width: `${progressPercentage}%` }}
+                ></div>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-1">
+              <AnimatePresence>
+                {liveTask?.subtasks?.map((subtask) => {
+                  return (
+                    <motion.div
+                      key={subtask.subTaskID}
+                      initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                      animate={{ opacity: 1, height: "auto", marginBottom: 4 }}
+                      exit={{
+                        opacity: 0,
+                        height: 0,
+                        marginBottom: 0,
+                        scale: 0.9,
+                        transition: {
+                          opacity: { duration: 0.2 },
+                          scale: { duration: 0.2 },
+                          height: { delay: 0.2, duration: 0.2 },
+                          marginBottom: { delay: 0.2, duration: 0.2 },
+                        },
+                      }}
+                      transition={{ duration: 0.25 }}
+                      layout
+                      className="overflow-hidden"
+                    >
+                      <SubtaskItem
+                        subtask={subtask}
+                        taskID={liveTask.taskID}
+                        key={subtask.subTaskID}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
           </div>
-          <p className="mt-4 text-sm text-gray-500">
+
+          <p className="mt-4 text-sm text-white">
             Tarefa Criada em: {formatDate(liveTask?.createdAt)}
           </p>
         </div>
