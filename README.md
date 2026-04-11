@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# 🚀 TaskMaster - To-Do List Avançada
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Um aplicativo de gerenciamento de tarefas moderno, construído com foco em performance, experiência do usuário (UX) e arquitetura escalável.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Funcionalidades (Features)
 
-## React Compiler
+- **Gerenciamento Completo:** Criação, edição e exclusão de tarefas principais e sub-tarefas.
+- **Persistência de Dados:** Uso de `localStorage` integrado ao Context API para garantir que as tarefas não sejam perdidas ao recarregar a página.
+- **Validação de Calendário Real:** Proteção contra datas inválidas (ex: 31 de Fevereiro) e bloqueio de agendamentos no passado, orquestrado pela biblioteca `date-fns`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tecnologias e Decisões Arquiteturais
 
-## Expanding the ESLint configuration
+Este projeto foi desenvolvido utilizando as melhores práticas do ecossistema Frontend atual:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **[React 18]** - Biblioteca principal para construção da UI.
+- **[TypeScript]** - Tipagem estrita garantindo previsibilidade de dados e uso de Utility Types como `Omit` para modelagem de Contextos.
+- **[Context API]** - Gerenciamento de estado global da aplicação.
+- **[Tailwind CSS]** - Estilização baseada em utilitários para componentização rápida.
+- **[Date-fns]** - Manipulação, formatação e validação de tempo sem inflar o bundle final (diferente do Moment.js).
+- **ISO 8601 Strings:** Arquitetura de "Sanduíche de Datas", onde o estado global e o storage guardam datas em texto imutável (ISO), e a UI hidrata para objetos `Date` apenas no momento da renderização.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 💻 Como rodar o projeto localmente
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/J-Inacio/TODO-LIST-REACT-TS
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📸 Screenshots
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+![print da tela inicial](image.png)
+![print tela de detalhes da tarefa](image-2.png)
+![print da seção de subtarefa](image-3.png)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🌐 [Clique aqui para visualizar o projeto!](https://todo-list-react-ts-taupe.vercel.app/)
