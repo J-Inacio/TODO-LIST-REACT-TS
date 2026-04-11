@@ -5,6 +5,7 @@ import { DetailsModal } from "../DetailsModal/DetailsModal";
 import { ListItem } from "./ListItem";
 import { AnimatePresence, motion } from "motion/react";
 import { DropDownList } from "../DropDownList";
+
 export const ListLayout = () => {
   const { tasks, addTask } = useTodo();
   const [selectedTask, setSelectedTask] = useState<TaskInterface | null>(null);

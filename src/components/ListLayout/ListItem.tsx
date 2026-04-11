@@ -5,6 +5,7 @@ import React, { useId, useState } from "react";
 import { useError } from "../../hooks/useError";
 import { useSetTimeout } from "../../hooks/useSetTimeout";
 import { Checkbox } from "../ui/Checkbox";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
 interface ListItemProps {
   item: TaskInterface;
@@ -71,7 +72,9 @@ export const ListItem = ({ item, onOpenDetails }: ListItemProps) => {
 
         <div className="flex gap-1">
           <Button onClick={onOpenDetails}>Detalhes</Button>
-          <Button onClick={handleRemoveTask}>Excluir</Button>
+          <Button onClick={handleRemoveTask}>
+            <TrashIcon className="w-5" />
+          </Button>
         </div>
       </li>
     </>

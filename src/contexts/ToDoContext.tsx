@@ -15,13 +15,16 @@ export interface TaskInterface {
   isChecked: boolean;
   description: string;
   subtasks: SubTaskInterface[];
+  completeDate: string | null;
 }
+type TaskData = Omit<
+  TaskInterface,
+  "taskID" | "createdAt" | "isChecked" | "description" | "subtasks" | "completeDate"
+>;
 
 interface ToDoContextType {
   tasks: TaskInterface[];
-  addTask: (
-    task: Omit<TaskInterface, "taskID" | "createdAt" | "isChecked" | "description" | "subtasks">,
-  ) => void;
+  addTask: (task: TaskData) => void;
   removeTask: (id: number) => void;
   updateTask: (id: number, updatedFields: Partial<TaskInterface>) => void;
   addSubTask: (id: number, subTaskName: string) => void;
@@ -40,12 +43,7 @@ export const ToDoContextProvider = ({ children }: { children: React.ReactNode })
     setIsLoading(false);
   }, []);
 
-  const addTask = (
-    taskData: Omit<
-      TaskInterface,
-      "taskID" | "createdAt" | "isChecked" | "description" | "subtasks"
-    >,
-  ) => {
+  const addTask = (taskData: TaskData) => {
     const newTask: TaskInterface = {
       ...taskData,
       taskID: generateId(),
@@ -53,6 +51,7 @@ export const ToDoContextProvider = ({ children }: { children: React.ReactNode })
       isChecked: false,
       description: "",
       subtasks: [],
+      completeDate: null,
     };
     setTasks((currentTasks) => [newTask, ...currentTasks]);
   };

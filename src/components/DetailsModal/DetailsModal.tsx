@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { SubtaskItem } from "./SubtaskItem";
 import { Description } from "./Description";
 import { AddNewTask } from "../AddNewTask";
+import { CompleteDateInput } from "./CompleteDateInput";
+import { useState } from "react";
 
 interface DetailsModalProps {
   onClose: () => void;
@@ -17,6 +19,9 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
   const hasSubtask = totalSubtasks > 0;
   const subTasksCompleted = liveTask?.subtasks?.filter((t) => t.subIsChecked).length ?? 0;
   const progressPercentage = hasSubtask ? Math.round((subTasksCompleted / totalSubtasks) * 100) : 0;
+  const [completeDate, setCompleteDate] = useState<string | null>(
+    formatDate(liveTask?.completeDate) || null,
+  );
 
   const handleAddSubTask = (name: string) => {
     if (!liveTask) return;
@@ -101,6 +106,11 @@ export const DetailsModal = ({ onClose, id }: DetailsModalProps) => {
                 })}
               </AnimatePresence>
             </div>
+          </div>
+          <div>
+            <h3 className="text-2xl">Data de conclusão:</h3>
+
+            <CompleteDateInput task={liveTask} value={completeDate} onChange={setCompleteDate} />
           </div>
 
           <p className="mt-4 text-sm text-white">
